@@ -8,7 +8,7 @@ import { api } from '../services/api'
 
 
 function App() {
-   const [respos, setRepos, removeRepo] = useState([]);
+   const [respos, setRepos] = useState([]);
 
    const [currentRepo, setCurrentRepo] = useState('');
    const handleSearchRepo = async () => {
@@ -26,18 +26,9 @@ function App() {
       }
       alert('Repositório não encontrado')
    }
-   const handleRemoveRepo = async (id) => {
-      const { data } = await api.get(`/repos/${currentRepo}`)
-
-      if (data.id) {
-         const isExist = respos.find(repo => repo.id === data.id)
-
-         if (isExist) {
-            setCurrentRepo('')
-            return
-         }
-
-      }
+   const handleRemoveRepo = (id) => {
+      const remove = respos.filter((repo) => repo.id !== id)
+      setRepos(remove)
    }
 
 
